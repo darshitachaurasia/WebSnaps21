@@ -1,12 +1,31 @@
-# React + Vite
+# 🎨 Day 2: Imaginaa – Text & Voice to Image Generator | WebSnaps21
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **Day 2 of WebSnaps21**, where we build **Imaginaa** — an AI-powered **Text & Voice-to-Image Generator** using **React (Vite)**, **TailwindCSS**, and **ClipDrop API**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✅ Features:
+- ✍️ **Type a prompt** → Generate amazing AI images.
+- 🎤 **Speak your prompt** → Built-in voice recognition.
+- 🔊 **Voice Feedback** → AI confirms your request.
+- ⚡ **Beautiful UI** → Styled with TailwindCSS.
+- 🎨 **AI-powered image generation** using ClipDrop API.
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+---
+
+## 🛠️ Tech Stack
+- **Frontend:** React (Vite)
+- **Styling:** TailwindCSS
+- **Speech Recognition:** Web Speech API
+- **Image Generation:** [ClipDrop API](https://clipdrop-api.co/text-to-image/v1)
+
+---
+
+## ⚡ Getting Started
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/yourusername/WebSnaps21.git
+cd WebSnaps21/day-2-imaginaa
