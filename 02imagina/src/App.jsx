@@ -9,22 +9,20 @@ function App() {
   const [response, setResponse] = useState('');
   const recognitionRef = useRef(null);
 
-  // ✅ Generate Image Function
   const generateImage = async (promptText) => {
     const prompt = promptText || inputRef.current.value.trim();
     if (!prompt) return;
 
-    console.log("Generating image for:", prompt);
     setLoading(true);
     setError('');
     setImageUrl('');
-   const apiKey = import.meta.env.VITE_CLIPDROP_API_KEY;
+    const apiKey = import.meta.env.VITE_CLIPDROP_API_KEY;
 
     try {
       const res = await fetch('https://clipdrop-api.co/text-to-image/v1', {
         method: 'POST',
         headers: {
-          'x-api-key': apiKey, // ⚠ Move to backend in production
+          'x-api-key': apiKey,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ prompt }),
@@ -42,7 +40,6 @@ function App() {
     }
   };
 
-  // ✅ Voice Setup
   useEffect(() => {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -59,12 +56,11 @@ function App() {
     recognition.onresult = (event) => {
       const lastResult = event.results[event.results.length - 1][0].transcript;
       setTranscript(lastResult);
-      inputRef.current.value = lastResult; // ✅ Fill input
+      inputRef.current.value = lastResult;
       generateResponse(lastResult);
     };
 
-    recognition.onerror = (e) =>
-      console.error("Speech recognition error:", e.error);
+    recognition.onerror = (e) => console.error("Speech recognition error:", e.error);
 
     recognitionRef.current = recognition;
 
@@ -73,7 +69,6 @@ function App() {
 
   const startListening = () => recognitionRef.current?.start();
 
-  // ✅ Voice Response
   const generateResponse = (text) => {
     const reply = 'I heard you, generating your image!';
     generateImage(text);
@@ -83,31 +78,29 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-100 via-white to-green-50 flex flex-col items-center justify-center px-6 py-10">
-      <div className="max-w-2xl w-full bg-white rounded-3xl shadow-xl p-8 text-center">
-        <h1 className="text-4xl font-extrabold text-green-800 mb-4">Imaginaa</h1>
-        <p className="text-gray-500 mb-6">
+    <div className="min-h-screen bg-gradient-to-r from-green-100 via-white to-green-50 flex flex-col items-center justify-center px-4 sm:px-6 py-10">
+      <div className="w-full max-w-2xl bg-white rounded-3xl shadow-xl p-6 sm:p-8 text-center">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-green-800 mb-4">Imaginaa</h1>
+        <p className="text-gray-500 text-sm sm:text-base mb-6">
           Type or <span className="font-semibold">Speak</span> your prompt and watch the magic happen!
         </p>
 
-        <div className="flex gap-3 mb-6">
+        {/* ✅ Input & Mic Button Responsive */}
+        <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <input
             ref={inputRef}
             type="text"
             placeholder="Describe your image (e.g., A futuristic city at night)"
             onKeyDown={(e) => e.key === 'Enter' && generateImage()}
-            className="flex-grow px-4 py-3 border-2 border-green-300 rounded-xl shadow focus:ring-2 focus:ring-green-500 focus:outline-none text-lg"
+            className="flex-grow px-4 py-3 border-2 border-green-300 rounded-xl shadow focus:ring-2 focus:ring-green-500 focus:outline-none text-base"
           />
           <button
             onClick={startListening}
-            className="px-4 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all shadow-md"
+            className="px-4 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all shadow-md flex items-center justify-center"
           >
             <svg
-              className="w-6 h-6 text-white"
-              aria-hidden="true"
+              className="w-5 h-5 sm:w-6 sm:h-6 text-white"
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -121,6 +114,7 @@ function App() {
           </button>
         </div>
 
+        {/* ✅ Generate Button */}
         <button
           onClick={() => generateImage()}
           className="w-full py-3 bg-green-700 text-white text-lg font-semibold rounded-xl hover:bg-green-800 transition-all shadow-md"
@@ -128,24 +122,27 @@ function App() {
           Generate Image
         </button>
 
+        {/* ✅ Loading & Errors */}
         {loading && <p className="mt-4 text-green-700 animate-pulse">Generating image...</p>}
         {error && <p className="mt-4 text-red-600">{error}</p>}
 
+        {/* ✅ Generated Image */}
         {imageUrl && (
           <img
             src={imageUrl}
             alt="Generated"
-            className="mt-6 rounded-xl shadow-2xl max-h-[500px] mx-auto border border-gray-300"
+            className="mt-6 rounded-xl shadow-2xl max-h-[400px] sm:max-h-[500px] mx-auto border border-gray-300 w-full max-w-full h-auto object-contain"
           />
         )}
 
+        {/* ✅ Voice & Response Info */}
         {transcript && (
-          <p className="mt-4 text-gray-600">
+          <p className="mt-4 text-gray-600 text-sm sm:text-base">
             <strong>You said:</strong> {transcript}
           </p>
         )}
         {response && (
-          <p className="text-green-600 font-medium mt-2">{response}</p>
+          <p className="text-green-600 font-medium mt-2 text-sm sm:text-base">{response}</p>
         )}
       </div>
     </div>
