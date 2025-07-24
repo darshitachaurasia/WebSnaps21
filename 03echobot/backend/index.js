@@ -8,7 +8,13 @@ const app = express();
 app.use(cors());
 
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: "*" } });
+const io = new Server(server, {
+  cors: {
+    origin: "*",  // Or your frontend URL
+    methods: ["GET", "POST"]
+  }
+});
+
 
 const commands = {
     "hello": { type: "text", response: "Hi there! How can I help you?" },
