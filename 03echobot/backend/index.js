@@ -28,7 +28,6 @@ io.on('connection', (socket) => {
             if (command.type === "text") {
                 socket.emit('botMessage', { type: 'text', text: command.response });
             } else if (command.type === "image") {
-                
                 socket.emit('botMessage', { type: 'image', text: command.response });
             }
         } else {
@@ -37,6 +36,6 @@ io.on('connection', (socket) => {
     });
 });
 
-
-
-server.listen(5000, () => console.log('✅ Server running on http://localhost:5000'));
+// ✅ Use dynamic port for deployment
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
